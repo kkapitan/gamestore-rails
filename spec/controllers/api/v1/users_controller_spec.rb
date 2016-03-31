@@ -27,7 +27,7 @@ describe Api::V1::UsersController do
 
       it "renders the json representation for the user record just created" do
         user_response = JSON.parse(response.body, symbolize_names: true)
-        expect(user_response[:email]).to eql @user.email
+        expect(user_response[:email]).to eql @user_attributes[:email]
       end
 
       it { should respond_with 201}
@@ -35,8 +35,8 @@ describe Api::V1::UsersController do
 
     context "when is not created" do
       before(:each) do
-        @user_attributes = { email: "example@domain.com" }
-        post :create, {user: @user_attributes}, format: :json
+        @invalid_user_attributes = { password: "11231", password_confirmation: "11231" }
+        post :create, {user: @invalid_user_attributes}, format: :json
       end
 
       it "renders error json" do
