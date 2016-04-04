@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   respond_to :json
   before_action :authenticate_with_token!, only: [:destroy, :update]
-  
+
   def show
     respond_with User.find(params[:id])
   end
