@@ -9,12 +9,26 @@ describe Api::V1::GamesController do
     end
 
     it "returns the information about a game on a hash" do
-      product_response = json_response
-      expect(product_response[:title]).to eql @game.title
+      game_response = json_response
+      expect(game_response[:title]).to eql @game.title
     end
 
     it { should respond_with 200 }
 
+  end
+
+  describe "GET #index" do
+    before(:each) do
+      4.times { FactoryGirl.create :game }
+      get :index
+    end
+
+    it "returns json with list of games" do
+      game_response = json_response
+      expect(game_response[:games].count).to eql 4
+    end
+
+    it { should respond_with 200 }
   end
 
   describe "POST #create" do
