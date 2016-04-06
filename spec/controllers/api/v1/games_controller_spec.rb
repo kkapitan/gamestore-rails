@@ -86,6 +86,16 @@ describe Api::V1::GamesController do
 
   end
 
+  describe "DELETE #destroy" do
+    before(:each) do
+      @game = FactoryGirl.create :game
+      delete :destroy, id: @game.id
+    end
+
+    it { should respond_with 204 }
+
+  end
+
 
 
 end

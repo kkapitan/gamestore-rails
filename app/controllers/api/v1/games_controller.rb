@@ -23,6 +23,12 @@ class Api::V1::GamesController < ApplicationController
     end
   end
 
+  def destroy
+    game = Game.find(params[:id])
+    game.destroy
+    head 204
+  end
+
     private
       def game_params
         params.require(:game).permit(:title,:description,:price)
