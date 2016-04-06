@@ -76,4 +76,40 @@ describe Game do
 
   end
 
+  describe ".search" do
+    before(:each) do
+      @game1 = FactoryGirl.create :game, title: "World of Warcraft", price: 100
+      @game2 = FactoryGirl.create :game, title: "Witcher 3", price: 99
+      @game3 = FactoryGirl.create :game, title: "GTA V", price: 150
+      @game4 = FactoryGirl.create :game, title: "Worms", price: 50
+    end
+
+    context "when title 'Wo' and '101' as a min price are set" do
+
+      it "returns an empty array" do
+        search_hash = { keyword: "wo", min_price: 101 }
+        expect(Game.search(search_hash)).to be_empty
+      end
+
+    end
+
+    context "when title 'Wo' and '100' as a max price and '70' as a min price are set" do
+
+      it "returns the games matching" do
+        search_hash = { keyword: "wo", min_price: "70", max_price:"100" }
+        expect(Game.search(search_hash)).to match_array([@game1])
+      end
+
+    end
+
+    context "when an empty hash is sent" do
+
+      it "returns all the games" do
+        expect(Game.search({})).to match_array([@game1, @game2, @game3, @game4])
+      end
+
+    end
+
+  end
+
 end

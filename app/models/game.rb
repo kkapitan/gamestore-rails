@@ -6,4 +6,14 @@ class Game < ActiveRecord::Base
   scope :filter_by_title, lambda { |keyword| where("lower(title) LIKE ?", "%#{keyword.downcase}%")}
   scope :above_or_equal_to_price, lambda { |price| where("price >= ?", price)}
   scope :below_or_equal_to_price, lambda { |price| where("price <= ?", price)}
+
+  def self.search(params = {} )
+    games = Game.all
+
+    games = games.filter_by_title(params[:keyword]) if params[:keyword]
+    games = games.above_or_equal_to_price(params[:min_price]) if params[:min_price]
+    games = games.below_or_equal_to_price(params[:max_price]) if params[:max_price]
+
+    games
+  end
 end
