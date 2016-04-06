@@ -9,7 +9,7 @@ describe Api::V1::GamesController do
     end
 
     it "returns the information about a game on a hash" do
-      game_response = json_response
+      game_response = json_response[:game]
       expect(game_response[:title]).to eql @game.title
     end
 
@@ -40,7 +40,7 @@ describe Api::V1::GamesController do
       end
 
       it "returns json with information about created object" do
-        game_response = json_response
+        game_response = json_response[:game]
         expect(game_response[:title]).to eql @game_attributes[:title]
       end
 
@@ -74,7 +74,7 @@ describe Api::V1::GamesController do
       end
 
       it "renders json with information about updated object" do
-        game_response = json_response
+        game_response = json_response[:game]
         expect(game_response[:price]).to eql @update_attributes[:price]
       end
 
