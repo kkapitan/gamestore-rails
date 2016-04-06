@@ -7,6 +7,9 @@ class Game < ActiveRecord::Base
   scope :above_or_equal_to_price, lambda { |price| where("price >= ?", price)}
   scope :below_or_equal_to_price, lambda { |price| where("price <= ?", price)}
 
+  has_many :libraries
+  has_many :users, through: :libraries
+
   def self.search(params = {} )
     games = Game.all
 

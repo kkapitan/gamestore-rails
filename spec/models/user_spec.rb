@@ -18,6 +18,9 @@ describe User do
   it { should allow_value('example@domain.com').for(:email) }
   it { should validate_uniqueness_of(:auth_token) }
 
+  it { should have_many(:libraries) }
+  it { should have_many(:games).through(:libraries) }
+
   describe "#generate_authentication_token!" do
 
     it "generates a unique  token" do
