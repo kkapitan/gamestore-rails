@@ -7,11 +7,19 @@ class Api::V1::GamesController < ApplicationController
 
   def create
     game = Game.new(game_params)
-    print(game_params)
     if game.save
       render json: game, status: 201, location: [:api, game]
     else
       render json: {errors: game.errors}, status: 422
+    end
+  end
+
+  def update
+    game = Game.find(params[:id])
+    if game.update(game_params)
+      render json: game, status: 200, location: [:api, game]
+    else
+      render json: {errors: game.errors }, status: 422
     end
   end
 

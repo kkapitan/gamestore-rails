@@ -15,7 +15,7 @@ Gamestore::Application.routes.draw do
       resources :sessions
 
       #games
-      resources :games, :only => [:show, :create]
+      resources :games, :only => [:show, :create, :update]
 
     end
   end
