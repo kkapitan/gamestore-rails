@@ -20,6 +20,8 @@ describe Game do
   it { should have_many(:libraries) }
   it { should have_many(:users).through(:libraries) }
 
+  it { should have_many(:reviews) }
+
   describe ".filter_by_title" do
     before(:each) do
       @game1 = FactoryGirl.create :game, title: "World of Warcraft"

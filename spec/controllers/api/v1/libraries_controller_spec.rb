@@ -4,7 +4,6 @@ describe Api::V1::LibrariesController do
 
   describe "PUT/PATCH #update" do
 
-
     context "when update is successfull" do
       before(:each) do
         @user = FactoryGirl.create :user

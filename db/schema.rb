@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406142326) do
+ActiveRecord::Schema.define(version: 20160407092642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,19 @@ ActiveRecord::Schema.define(version: 20160406142326) do
 
   add_index "libraries", ["game_id"], name: "index_libraries_on_game_id", using: :btree
   add_index "libraries", ["user_id"], name: "index_libraries_on_user_id", using: :btree
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.string   "title"
+    t.integer  "mark"
+    t.string   "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "reviews", ["game_id"], name: "index_reviews_on_game_id", using: :btree
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -56,4 +69,6 @@ ActiveRecord::Schema.define(version: 20160406142326) do
 
   add_foreign_key "libraries", "games"
   add_foreign_key "libraries", "users"
+  add_foreign_key "reviews", "games"
+  add_foreign_key "reviews", "users"
 end

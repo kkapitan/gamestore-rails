@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :libraries, dependent: :destroy
   has_many :games, through: :libraries
 
+  has_many :reviews
+
   validates :auth_token, uniqueness: true
 
   before_create :generate_authentication_token!

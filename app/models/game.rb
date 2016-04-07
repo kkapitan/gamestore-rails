@@ -10,6 +10,8 @@ class Game < ActiveRecord::Base
   has_many :libraries, dependent: :destroy
   has_many :users, through: :libraries
 
+  has_many :reviews
+
   def self.search(params = {} )
     games = Game.all
 
