@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :libraries
+  has_many :libraries, dependent: :destroy
   has_many :games, through: :libraries
 
   validates :auth_token, uniqueness: true

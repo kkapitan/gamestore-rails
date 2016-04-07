@@ -96,7 +96,7 @@ describe Api::V1::UsersController do
 
   describe "DELETE #destroy" do
     before(:each) do
-      @user = FactoryGirl.create :user
+      @user = FactoryGirl.create :user_with_game_library
       api_authorization_header(@user.auth_token)
       delete :destroy, {id: @user.id }
     end
