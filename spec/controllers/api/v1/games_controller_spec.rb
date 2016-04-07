@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Api::V1::GamesController do
+  before(:each) do
+    @user = FactoryGirl.create :user
+    api_authorization_header(@user.auth_token)
+  end
 
   describe "GET #show" do
     before(:each) do

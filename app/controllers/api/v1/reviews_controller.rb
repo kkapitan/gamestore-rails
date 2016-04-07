@@ -1,5 +1,7 @@
 class Api::V1::ReviewsController < ApplicationController
 
+  before_action :authenticate_with_token!, only: [:create]
+
   def create
     review = Review.new(review_params)
     if review.save

@@ -1,12 +1,15 @@
 require 'spec_helper'
 
 describe Api::V1::LibrariesController do
+  before(:each) do
+    @user = FactoryGirl.create :user
+    api_authorization_header(@user.auth_token)
+  end
 
   describe "PUT/PATCH #update" do
 
     context "when update is successfull" do
       before(:each) do
-        @user = FactoryGirl.create :user
         @game1 = FactoryGirl.create :game
         @game2 = FactoryGirl.create :game
         patch :update, {id: @user.id, game_ids: [@game1.id, @game2.id]}

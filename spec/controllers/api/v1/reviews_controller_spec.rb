@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Api::V1::ReviewsController do
+  before(:each) do
+    @user = FactoryGirl.create :user
+    api_authorization_header(@user.auth_token)
+  end
 
   describe "POST #create" do
 

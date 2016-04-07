@@ -1,5 +1,6 @@
 class Api::V1::GamesController < ApplicationController
   respond_to :json
+  before_action :authenticate_with_token!
 
   def index
     respond_with Game.search(params)

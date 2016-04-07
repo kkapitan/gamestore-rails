@@ -1,6 +1,8 @@
 class Api::V1::LibrariesController < ApplicationController
+  before_action :authenticate_with_token!, only: [:update]
+
   def update
-    user = User.find(params[:id])
+    user = @current_user
 
     game_ids = params[:game_ids]
     game_ids.each { |game_id|
