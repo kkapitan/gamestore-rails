@@ -3,7 +3,7 @@ class Api::V1::GamesController < ApplicationController
   before_action :authenticate_with_token!
 
   def index
-    respond_with Game.search(params)
+    respond_with Game.search(params).page(params[:page]).per(params[:limit])
   end
 
   def show

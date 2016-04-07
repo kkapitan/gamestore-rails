@@ -22,17 +22,70 @@ describe Api::V1::GamesController do
   end
 
   describe "GET #index" do
-    before(:each) do
-      4.times { FactoryGirl.create :game }
-      get :index
+
+    context "when no search and paging are specified" do
+
+      before(:each) do
+        4.times { FactoryGirl.create :game }
+        get :index
+      end
+
+      it "returns json with list of games" do
+        game_response = json_response
+        expect(game_response[:games].count).to eql 4
+      end
+
+      it { should respond_with 200 }
     end
 
-    it "returns json with list of games" do
-      game_response = json_response
-      expect(game_response[:games].count).to eql 4
+    context "when page and limit are specified" do
+
+      before(:each) do
+        @game1 = FactoryGirl.create :game, title: "World"
+        @game2 = FactoryGirl.create :game, title: "World 2"
+        @game3 = FactoryGirl.create :game, title: "2 World"
+        @game4 = FactoryGirl.create :game, title: "3 World"
+        
+        get :index, {page:2, limit: 2 }
+      end
+
+      it "returns json with limited list of games" do
+        game_response = json_response
+        expect(game_response[:games].count).to eql 2
+      end
+
+      it "returns objects from the limited list" do
+        game_response = json_response
+        expect(game_response[:games][0][:id]).to eql @game3.id
+        expect(game_response[:games][1][:id]).to eql @game4.id
+      end
+
+      it { should respond_with 200 }
     end
 
-    it { should respond_with 200 }
+    context "when search criteria are present"  do
+      before(:each) do
+        @game1 = FactoryGirl.create :game, title: "World"
+        @game2 = FactoryGirl.create :game, title: "World 2"
+        @game3 = FactoryGirl.create :game, title: "2 World"
+        @game4 = FactoryGirl.create :game, title: "3 World"
+
+        get :index, {keyword:"2" }
+      end
+
+      it "returns json with filtered list of games" do
+        game_response = json_response
+        expect(game_response[:games].count).to eql 2
+      end
+
+      it "returns objects from the filtered list" do
+        game_response = json_response
+        expect(game_response[:games][0][:id]).to eql @game2.id
+        expect(game_response[:games][1][:id]).to eql @game3.id
+      end
+      it { should respond_with 200 }
+    end
+
   end
 
   describe "POST #create" do
