@@ -19,6 +19,9 @@ Gamestore::Application.routes.draw do
 
       #libraries
       patch '/libraries/add', to: 'libraries#update'
+
+      #reviews
+      resources :reviews, :only => [:create]
     end
   end
 end
