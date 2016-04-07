@@ -13,11 +13,12 @@ Gamestore::Application.routes.draw do
       #sessions
       resources :sessions, :only => [:create]
       delete '/sessions/logout', to: 'sessions#destroy'
-      resources :sessions
 
       #games
       resources :games, :only => [:index, :show, :create, :update, :destroy]
 
+      #libraries
+      patch '/libraries/add', to: 'libraries#update'
     end
   end
 end
