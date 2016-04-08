@@ -2,7 +2,7 @@ require 'api_constraints'
 
 Gamestore::Application.routes.draw do
   mount SabisuRails::Engine => "/sabisu_rails"
-  devise_for :users
+
 
   namespace :api, defaults: { format: :json }, path: '/' do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
@@ -22,6 +22,8 @@ Gamestore::Application.routes.draw do
 
       #reviews
       resources :reviews, :only => [:create]
+
+      devise_for :users
     end
   end
 end
