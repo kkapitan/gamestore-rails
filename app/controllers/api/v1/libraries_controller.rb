@@ -9,7 +9,7 @@ class Api::V1::LibrariesController < ApplicationController
       library_entry = Library.new({user_id:user.id, game_id:game_id})
 
       unless library_entry.save
-        render json: {errors: "Something went wrong!"}, status: 422
+        render json: {errors: {data: ["Something went wrong!"]}}, status: 422
         return
       end
     }
