@@ -45,10 +45,10 @@ describe Api::V1::SessionsController do
       end
 
       it "returns json with errors" do
-        expect(json_response[:errors][:credentials]).to eql "User does not exist"
+        expect(json_response[:errors][:credentials]).to eql "Invalid email or password"
       end
 
-      it { should respond_with 404 }
+      it { should respond_with 422 }
 
     end
 
