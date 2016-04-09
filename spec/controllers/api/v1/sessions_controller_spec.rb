@@ -38,6 +38,20 @@ describe Api::V1::SessionsController do
 
     end
 
+    context "when user does not exist in database" do
+      before(:each) do
+        credentials = { email: "idontexist@gmail.com", password: "evenworsepassword" }
+        post :create, { session: credentials }
+      end
+
+      it "returns json with errors" do
+        expect(json_response[:errors][:credentials]).to eql "User does not exist"
+      end
+
+      it { should respond_with 404 }
+
+    end
+
   end
 
   describe "DELETE #destroy" do
