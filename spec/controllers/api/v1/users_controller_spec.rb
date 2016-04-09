@@ -29,6 +29,11 @@ describe Api::V1::UsersController do
         expect(user_response[:email]).to eql @user_attributes[:email]
       end
 
+      it "generates authentication token" do
+        user_response = json_response[:user]
+        expect(user_response[:auth_token]).to be_present
+      end
+
       it { should respond_with 201}
     end
 
