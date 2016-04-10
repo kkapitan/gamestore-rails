@@ -1,13 +1,14 @@
 class Api::V1::GamesController < ApplicationController
+
   respond_to :json
-  before_action :authenticate_with_token!
+  #before_action :authenticate_with_token!
 
   def index
     respond_with Game.search(params).page(params[:page]).per(params[:limit])
   end
 
   def show
-    respond_with Game.find(params[:id])
+    render json:Game.find(params[:id]), serializer: CompleteGameSerializer, status: 200
   end
 
   def create
@@ -39,4 +40,11 @@ class Api::V1::GamesController < ApplicationController
         params.require(:game).permit(:title,:description,:price)
       end
 
+end
+
+class CompleteGameSerializer < ActiveModel::Serializer
+  attributes :id, :title, :description, :price
+
+  root :game
+  has_many :reviews
 end

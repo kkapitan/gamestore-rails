@@ -8,13 +8,18 @@ describe Api::V1::GamesController do
 
   describe "GET #show" do
     before(:each) do
-      @game = FactoryGirl.create :game
+      @game = FactoryGirl.create :game_with_reviews
       get :show, id: @game.id
     end
 
     it "returns the information about a game on a hash" do
       game_response = json_response[:game]
       expect(game_response[:title]).to eql @game.title
+    end
+
+    it "returns information about game reviews" do
+      game_response = json_response[:game]
+      expect(game_response).to have_key(:reviews)
     end
 
     it { should respond_with 200 }
