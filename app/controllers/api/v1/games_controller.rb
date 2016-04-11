@@ -8,7 +8,7 @@ class Api::V1::GamesController < ApplicationController
   end
 
   def show
-    render json:Game.find(params[:id]), serializer: CompleteGameSerializer, status: 200
+    render json:Game.find(params[:id]), serializer: DetailedGameSerializer, status: 200
   end
 
   def create
@@ -40,11 +40,4 @@ class Api::V1::GamesController < ApplicationController
         params.require(:game).permit(:title,:description,:price)
       end
 
-end
-
-class CompleteGameSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :price
-
-  root :game
-  has_many :reviews
 end
