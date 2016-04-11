@@ -12,6 +12,8 @@ class Game < ActiveRecord::Base
 
   has_many :reviews
 
+  as_enum :category, [:FPS, :RTS, :RPG], map: :string
+
   def self.search(params = {} )
     games = Game.all
 

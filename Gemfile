@@ -24,6 +24,9 @@ gem 'active_model_serializers'
 # user model and authentication
 gem 'devise'
 
+# enums
+gem 'simple_enum'
+
 # sabisu
 gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
 gem 'furatto'

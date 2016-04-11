@@ -4,7 +4,7 @@ class Api::V1::GamesController < ApplicationController
   #before_action :authenticate_with_token!
 
   def index
-    respond_with Game.search(params).page(params[:page]).per(params[:limit])
+    render json:[Game.search(params).page(params[:page]).per(params[:limit]), {categories: Game.categories.hash.values}], status:200
   end
 
   def show

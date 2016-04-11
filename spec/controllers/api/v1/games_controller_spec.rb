@@ -15,6 +15,7 @@ describe Api::V1::GamesController do
     it "returns the information about a game on a hash" do
       game_response = json_response[:game]
       expect(game_response[:title]).to eql @game.title
+      expect(game_response[:category_cd]).to eql @game.category_cd
     end
 
     it "returns information about game reviews" do
@@ -37,10 +38,15 @@ describe Api::V1::GamesController do
 
       it "returns json with list of games" do
         game_response = json_response
-        expect(game_response[:games].count).to eql 4
+        expect(game_response[:games][0].count).to eql 4
       end
 
       it { should respond_with 200 }
+
+      it "returns categories list" do
+        categories_response = json_response[:games][1]
+        expect(categories_response).to have_key(:categories)
+      end
     end
 
     context "when page and limit are specified" do
@@ -56,13 +62,13 @@ describe Api::V1::GamesController do
 
       it "returns json with limited list of games" do
         game_response = json_response
-        expect(game_response[:games].count).to eql 2
+        expect(game_response[:games][0].count).to eql 2
       end
 
       it "returns objects from the limited list" do
         game_response = json_response
-        expect(game_response[:games][0][:id]).to eql @game3.id
-        expect(game_response[:games][1][:id]).to eql @game4.id
+        expect(game_response[:games][0][0][:id]).to eql @game3.id
+        expect(game_response[:games][0][1][:id]).to eql @game4.id
       end
 
       it { should respond_with 200 }
@@ -85,8 +91,8 @@ describe Api::V1::GamesController do
 
       it "returns objects from the filtered list" do
         game_response = json_response
-        expect(game_response[:games][0][:id]).to eql @game2.id
-        expect(game_response[:games][1][:id]).to eql @game3.id
+        expect(game_response[:games][0][0][:id]).to eql @game2.id
+        expect(game_response[:games][0][1][:id]).to eql @game3.id
       end
       it { should respond_with 200 }
     end

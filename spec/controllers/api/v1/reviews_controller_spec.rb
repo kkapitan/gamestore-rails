@@ -16,7 +16,7 @@ describe Api::V1::ReviewsController do
 
       it "renders information about created object" do
         review_response = json_response
-        expect(review_response[:mark]).to eql @review_attributes[:mark]
+        expect(review_response[:review][:mark]).to eql @review_attributes[:mark]
       end
 
       it { should respond_with 201 }

@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :authenticate_with_token!, only: [:destroy, :update]
 
   def show
-    respond_with User.find(params[:id])
+    render json: User.find(params[:id]), serializer: SimplifiedUserSerializer, status: 200
   end
 
   def create
