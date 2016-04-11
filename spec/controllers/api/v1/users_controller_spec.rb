@@ -11,6 +11,9 @@ describe Api::V1::UsersController do
     it "returns the information about user on a hash" do
       user_response = json_response[:user]
       expect(user_response[:email]).to eql @user.email
+      expect(user_response[:nickname]).to eql @user.nickname
+      expect(user_response[:name]).to eql @user.name
+      expect(user_response[:last_name]).to eql @user.last_name
     end
 
     it { should respond_with 200 }
