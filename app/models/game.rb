@@ -6,13 +6,14 @@ class Game < ActiveRecord::Base
   scope :filter_by_title, lambda { |keyword| where("lower(title) LIKE ?", "%#{keyword.downcase}%")}
   scope :above_or_equal_to_price, lambda { |price| where("price >= ?", price)}
   scope :below_or_equal_to_price, lambda { |price| where("price <= ?", price)}
+  scope :filter_by_category, lambda { |category| where("category_cd = ?", category)}
 
   has_many :libraries, dependent: :destroy
   has_many :users, through: :libraries
 
   has_many :reviews
 
-  as_enum :category, [:FPS, :RTS, :RPG], map: :string
+  as_enum :category, [:All, :FPS, :RTS, :RPG], map: :string
 
   def self.search(params = {} )
     games = Game.all
@@ -20,6 +21,7 @@ class Game < ActiveRecord::Base
     games = games.filter_by_title(params[:keyword]) if params[:keyword]
     games = games.above_or_equal_to_price(params[:min_price]) if params[:min_price]
     games = games.below_or_equal_to_price(params[:max_price]) if params[:max_price]
+    games = games.filter_by_category(params[:category]) if params[:category]
 
     games
   end
